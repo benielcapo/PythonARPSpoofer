@@ -34,6 +34,3 @@ def IsARPQuery(pkt):
 
 print(f"started at {datetime.now().strftime('%H:%M:%S')}")
 sniff(filter="arp", prn=lambda x: HandlePacket(x) if IsARPQuery(x) else None)
-def DontDoNothing(pkt):
-    return
-sniff(prn=DontDoNothing, store=0)
